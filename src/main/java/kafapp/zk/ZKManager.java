@@ -8,7 +8,12 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 
-public class ZKService {
+public class ZKManager {
+
+    // declare zookeeper instance to access ZooKeeper ensemble
+    private static ZooKeeper zk;
+
+    private static final CountDownLatch connectedSignal = new CountDownLatch(1);
 
     // Method to connect zookeeper ensemble.
     public static ZooKeeper connect(String host, final CountDownLatch connectedSignal) throws IOException,InterruptedException {
@@ -33,6 +38,24 @@ public class ZKService {
     // Method to create znode in zookeeper ensemble
     public static void create(ZooKeeper zk, String path, byte[] data) throws KeeperException,InterruptedException {
         zk.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+    }
+
+    // test
+    public static void testZK(){
+        // znode path
+        String path = "/MySecondZnode"; // Assign path to znode
+
+        // data in byte array
+        byte[] data = "My first zookeeper app222".getBytes(); //Declare data
+
+        // conn & create & close
+        try {
+            zk = ZKManager.connect("localhost", connectedSignal);
+            ZKManager.create(zk, path, data); // Create the data to the specified path
+            ZKManager.close(zk);
+        } catch (Exception e) {
+            System.out.println(e.getMessage()); //Catch error message
+        }
     }
 
 }
