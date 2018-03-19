@@ -1,8 +1,7 @@
-package kafapp.zk;
+package kafapp.zookeeper;
 
 
 import org.apache.zookeeper.*;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
@@ -43,10 +42,10 @@ public class ZKManager {
     // test
     public static void testZK(){
         // znode path
-        String path = "/MySecondZnode"; // Assign path to znode
+        String path = "/MyNode"; // Assign path to znode
 
         // data in byte array
-        byte[] data = "My first zookeeper app222".getBytes(); //Declare data
+        byte[] data = "My Data In a Node".getBytes(); //Declare data
 
         // conn & create & close
         try {
