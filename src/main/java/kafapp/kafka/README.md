@@ -1,26 +1,30 @@
-Running Kafka on Windows:
+#Running Kafka on Windows:
 
 The Java Environment variables should be set.
 Got to the Apache Kafka downloads page and download the Scala 2.12 kafka_2.12-0.10.2.1.tgz
 Unzip it.
-Open cmd prompt and start zookeeper-
 
-C:\kafka_2.12-0.10.2.1>.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+#Start zookeeper-
 
-Open a new command prompt and start the Apache Kafka-
+\kafka_2.12-0.10.2.1>.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
 
-C:\kafka_2.12-0.10.2.1>.\bin\windows\kafka-server-start.bat .\config\server.properties
+#Apache Kafka-
 
-Open a new command prompt and create a topic with name javainuse-topic, that has only one partition & one replica.
+\kafka_2.12-0.10.2.1>.\bin\windows\kafka-server-start.bat .\config\server.properties
 
-C:\kafka_2.12-0.10.2.1>.\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic javainuse-topic
+#Create a topic with name xxx-topic, that has only one partition & one replica.
 
-Next Open a new command prompt and create a producer to send message to the above created javainuse-topic and send a message - Hello World Javainuse to it-
+\kafka_2.12-0.10.2.1>.\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic javainuse-topic
 
-C:\kafka_2.12-0.10.2.1>.\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic javainuse-topic
+#Create a producer to send message to the above created xxx-topic and send a message - Hello
 
-Hello World Javainuse
+\kafka_2.12-0.10.2.1>.\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic javainuse-topic
 
-Finally Open a new command prompt and start the consumer which listens to the topic javainuse-topic we just created above. We will get the message we had sent using the producer
+Hello
 
-C:\kafka_2.12-0.10.2.1>.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic javainuse-topic --from-beginning
+#Start the consumer which listens to the topic xxx-topic we just created above. We will get the message we had sent using the producer
+
+\kafka_2.12-0.10.2.1>.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic xxx-topic --from-beginning
+
+or from any broker
+\kafka_2.12-0.10.2.1>.\bin/windows\kafka-console-consumer.bat --zookeeper localhost:2181 --topic xxx-topic --from-beginning

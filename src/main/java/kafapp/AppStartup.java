@@ -14,9 +14,6 @@ public class AppStartup {
         System.out.println("-----------------------STARTED------------------------");
         System.out.println("------------------------------------------------------");
 
-        //zookeeper test
-        //ZKManager.testZK();
-
     }
 
 }
