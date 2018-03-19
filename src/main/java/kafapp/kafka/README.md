@@ -1,4 +1,4 @@
-#Running Kafka on Windows:
+# Running Kafka on Windows:
 
 The Java Environment variables should be set.
 Got to the Apache Kafka downloads page and download the Scala 2.12 kafka_2.12-0.10.2.1.tgz

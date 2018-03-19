@@ -1,4 +1,4 @@
-# kafka-demo
+# kafka
 
 # ZooKeeper
 
