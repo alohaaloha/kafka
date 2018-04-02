@@ -71,15 +71,32 @@ public class KProducer {
     }
 
     public static void main(String[] args) throws Exception {
+
         //how many instances of producer?
+
+        //sample
         Producer<Long, String > producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);
         sendMessage(producer, "test-topic", "hello from the other side", 0l);
-        sendMessage(producer, "test-topic", "hellooooo", 0l);
+
+        //sample
+        producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);
         sendMessageAsync(producer, "test-topic", "hello from the other side again", 0l, new Callback() {
             @Override
             public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                 System.out.println("from callback");
             }
         });
+
+        //sample
+        int i=0;
+        while (true){
+            producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);
+            sendMessage(producer, "test-topic", "hello from the other side" + i, 0l);
+            i++;
+            Thread.sleep(2000);
+        }
+
     }
+
+
 }
