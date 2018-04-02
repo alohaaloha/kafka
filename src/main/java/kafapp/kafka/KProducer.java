@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class KProducer {
 
     private final static String BOOTSTRAP_SERVERS = "localhost:9092"; //"localhost:9092,localhost:9093,localhost:9094";
-    private final static String CLIENT_ID  = "I'm-producer-01";
+    private final static String CLIENT_ID  = "sample-producer-01";
 
     private static Producer<Long, String> createProducer(String server, String identification) {
         Properties props = new Properties();
@@ -39,9 +39,7 @@ public class KProducer {
     }
 
     static void sendMessageAsync(Producer<Long, String> producer, String topic, String message, Long partition){
-
         long time = System.currentTimeMillis();
-
         try {
             final ProducerRecord<Long, String> record = new ProducerRecord<>(topic, partition, message);
             producer.send(record, (metadata, exception) -> {
@@ -59,8 +57,6 @@ public class KProducer {
     }
 
     static void sendMessageAsync(Producer<Long, String> producer, String topic, String message, Long partition, Callback callback){
-        long time = System.currentTimeMillis();
-
         try {
             final ProducerRecord<Long, String> record = new ProducerRecord<>(topic, partition, message);
             producer.send(record, callback);
@@ -72,13 +68,13 @@ public class KProducer {
 
     public static void main(String[] args) throws Exception {
 
-        //how many instances of producer?
+        // how many instances of producer?
 
-        //sample
+        // sample 1
         Producer<Long, String > producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);
         sendMessage(producer, "test-topic", "hello from the other side", 0l);
 
-        //sample
+        // sample 2
         producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);
         sendMessageAsync(producer, "test-topic", "hello from the other side again", 0l, new Callback() {
             @Override
@@ -87,11 +83,11 @@ public class KProducer {
             }
         });
 
-        //sample
+        // sample 3
         int i=0;
         while (true){
             producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);
-            sendMessage(producer, "test-topic", "hello from the other side" + i, 0l);
+            sendMessage(producer, "test-topic", "hello from the other side " + i, 0l);
             i++;
             Thread.sleep(2000);
         }
