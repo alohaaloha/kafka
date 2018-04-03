@@ -19,18 +19,16 @@ public class KafStream {
         Properties config = new Properties();
         config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-application");
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        config.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-        config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+        config.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        //config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         KStreamBuilder builder = new KStreamBuilder();
-        // 1 - stream from Kafka
-
         KStream<String, String> textLines = builder.stream("test-topic");
+        KStream<String, String> upperCaseTextLines = textLines.mapValues(s -> s.toUpperCase());
+        upperCaseTextLines.to("result-topic");
 
-        // 7 - to in order to write the results back to kafka
-        textLines.to(Serdes.String(), Serdes.String(), "result-topic");
-
+        //start
         KafkaStreams streams = new KafkaStreams(builder, config);
         streams.start();
 
@@ -40,6 +38,7 @@ public class KafStream {
 
         // sample 1
         createStream();
+
     }
 
 }
