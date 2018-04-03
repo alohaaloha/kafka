@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class KConsumer {
+public class KafConsumer {
 
     private final static String BOOTSTRAP_SERVERS = "localhost:9092"; //"localhost:9092,localhost:9093,localhost:9094";
     private final static String GROUP_ID = "sample-group";
@@ -31,6 +31,7 @@ public class KConsumer {
         consumer.subscribe(Arrays.asList("test-topic")); // list of topics here.
         while (true) {
             ConsumerRecords<Long, String> records = consumer.poll(100);
+            System.out.println(records.count());
             for (ConsumerRecord<Long, String> record : records) {
                 System.out.println("--------------------------------------------------");
                 System.out.printf("offset = %d, key = %s, value = %s\n", record.offset(), record.key(), record.value());
