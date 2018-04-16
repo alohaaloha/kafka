@@ -10,7 +10,7 @@ import java.util.Properties;
 public class KafConsumer {
 
     private final static String BOOTSTRAP_SERVERS = "localhost:9092"; //"localhost:9092,localhost:9093,localhost:9094";
-    private final static String GROUP_ID = "sample-group";
+    private final static String GROUP_ID = "test-group-01";
 
     public static Consumer<Long, String> createConsumer(String server, String group_identification){
         Properties props = new Properties();

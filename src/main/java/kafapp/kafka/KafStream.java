@@ -17,7 +17,7 @@ public class KafStream {
     public static void createStream(){
 
         Properties config = new Properties();
-        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-application");
+        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "test-application");
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         config.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -25,11 +25,19 @@ public class KafStream {
 
         KStreamBuilder builder = new KStreamBuilder();
         KStream<String, String> textLines = builder.stream("test-topic");
-        KStream<String, String> upperCaseTextLines = textLines.mapValues(s -> s.toUpperCase());
-        upperCaseTextLines.to("result-topic");
+
+
+        //KStream<String, String> upperCaseTextLines = textLines.mapValues(s -> s.toUpperCase());
+        //upperCaseTextLines.to("result-topic");
+
+        textLines.mapValues(s -> s.toUpperCase()).to("test-result-topic");
 
         //start
         KafkaStreams streams = new KafkaStreams(builder, config);
+//        streams.setUncaughtExceptionHandler((Thread thread, Throwable throwable) -> {
+//            // here you should examine the throwable/exception and perform an appropriate action!
+//            System.out.println("WTFFFFFFFFFFFFFFFFFFF");
+//        });
         streams.start();
 
     }
