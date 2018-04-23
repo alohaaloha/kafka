@@ -32,7 +32,7 @@ public class KafStream {
         final StreamsBuilder builder = new StreamsBuilder();
 
         KStream<String, String> source = builder.stream("test-topic");
-        source.flatMapValues(value -> Arrays.asList(value.split("\\W+"))).to("stream-output");
+        source.flatMapValues(value -> Arrays.asList(value.toUpperCase().split("\\W+"))).to("stream-output");
 
         final Topology topology = builder.build();
         final KafkaStreams streams = new KafkaStreams(topology, props);
