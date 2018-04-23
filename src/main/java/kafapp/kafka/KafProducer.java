@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class KafProducer {
 
     private final static String BOOTSTRAP_SERVERS = "localhost:9092"; //"localhost:9092,localhost:9093,localhost:9094";
-    private final static String CLIENT_ID  = "test-producer-01";
+    private final static String CLIENT_ID  = "data-producer-01";
 
     private static Producer<Long, String> createProducer(String server, String identification) {
         Properties props = new Properties();
@@ -68,7 +68,7 @@ public class KafProducer {
 
     public static void main(String[] args) throws Exception {
 
-        // how many instances of producer?
+        // new producer instance per message?
 
         // sample 1
         Producer<Long, String > producer = createProducer(BOOTSTRAP_SERVERS, CLIENT_ID);

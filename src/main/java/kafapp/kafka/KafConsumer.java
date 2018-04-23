@@ -10,7 +10,7 @@ import java.util.Properties;
 public class KafConsumer {
 
     private final static String BOOTSTRAP_SERVERS = "localhost:9092"; //"localhost:9092,localhost:9093,localhost:9094";
-    private final static String GROUP_ID = "test-group-01";
+    private final static String GROUP_ID = "data-consumer-group-01";
 
     public static Consumer<Long, String> createConsumer(String server, String group_identification){
         Properties props = new Properties();
@@ -18,9 +18,6 @@ public class KafConsumer {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, group_identification);
-        //props.put("enable.auto.commit", "true");
-        //props.put("auto.commit.interval.ms", "1000");
-        //props.put("session.timeout.ms", "30000");
         return new KafkaConsumer<Long, String>(props);
     }
 
@@ -31,15 +28,12 @@ public class KafConsumer {
         consumer.subscribe(Arrays.asList("test-topic")); // list of topics here.
         while (true) {
             ConsumerRecords<Long, String> records = consumer.poll(100);
-            System.out.println(records.count());
             for (ConsumerRecord<Long, String> record : records) {
                 System.out.println("--------------------------------------------------");
                 System.out.printf("offset = %d, key = %s, value = %s\n", record.offset(), record.key(), record.value());
                 System.out.println("--------------------------------------------------");
             }
         }
-
-        // sample 2
 
     }
 
